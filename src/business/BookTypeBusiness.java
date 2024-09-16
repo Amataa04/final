@@ -130,18 +130,15 @@ public class BookTypeBusiness {
         List<BookType> bookTypeList = new ArrayList<>();
         try {
             connection = ConnectionDB.openConnection();
-            String sql = "select booktype.typeid, booktype.typeName, count(book.typeid) as totalBook from booktype" +
-                    "join book on booktype.typeid = book.typeid" +
-                    "group by booktype.typeid,booktype.typename";
+            String sql = "select booktype.typeid, booktype.typeName, count(book.typeid) as totalBook from booktype\n" +
+                    "join book on booktype.typeid = book.typeid\n" +
+                    "group by booktype.typeid, booktype.typename;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, bookId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 BookType bookType = new BookType();
                 bookType.setTypeId(resultSet.getInt("typeid"));
                 bookType.setTypeName(resultSet.getString("typename"));
-                bookType.setDescription(resultSet.getString("description"));
-                bookType.setDeleted(resultSet.getBoolean("isdeleted"));
                 bookTypeList.add(bookType);
             }
         }

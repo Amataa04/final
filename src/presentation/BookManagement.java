@@ -94,10 +94,13 @@ public class BookManagement {
                     BookManagement.addBook(sc);
                     break;
                 case 3:
+                    BookManagement.updateBook(sc);
                     break;
                 case 4:
+                    BookManagement.deleteBook(sc);
                     break;
                 case 5:
+                    BookManagement.listPriceBook(sc);
                     break;
                 case 6:
                     break;
@@ -203,7 +206,7 @@ public class BookManagement {
         int idBookType = Integer.parseInt(sc.nextLine());
         List<BookType> bookTypesList = BookTypeBusiness.getAllBookTypesByBookId(idBookType);
         for (BookType bookType : bookTypesList) {
-            bookType.displayData();
+            bookType.displayTotalBooks();
         }
     }
     // xay dung phuong thuc danh sach cac sach
@@ -227,50 +230,105 @@ public class BookManagement {
     }
     // xay dung phuong thuc cap nhap danh sach loai sach
     public static void updateBook(Scanner sc){
-        System.out.println("Nhap id loai sach can sua: ");
-        int idBookType = Integer.parseInt(sc.nextLine());
-        BookType bookType = BookTypeBusiness.getBookTypeById(idBookType);
-        if (bookType != null) {
-            bookType.displayData();
+        System.out.println("Nhap id sach can sua: ");
+        int idBook = Integer.parseInt(sc.nextLine());
+        Book book = BookBusiness.getBookById(idBook);
+        if (book != null) {
+            book.displayData();
             boolean isExit = true;
             do {
                 System.out.println("Chon muc can sua");
-                System.out.println("1. Sua ten loai sach");
-                System.out.println("2. Sua mo ta");
-                System.out.println("3. Sua trang thai loai sach");
-                System.out.println("4. Thoat");
+                System.out.println("1. Sua ten sach");
+                System.out.println("2. Sua tieu de sach");
+                System.out.println("3. Sua ten tac gia");
+                System.out.println("4. Sua tong so trang");
+                System.out.println("5. Sua noi dung");
+                System.out.println("6. Sua nha san xuat");
+                System.out.println("7. Sua gia tien");
+                System.out.println("8. Sua ma loai sach");
+                System.out.println("9. Sua trang thai");
+                System.out.println("10. Thoat");
                 int choice = Integer.parseInt(sc.nextLine());
                 switch (choice) {
                     case 1:
-                        System.out.println("Nhap ten loai sach can sua: ");
-                        bookType.setTypeName(sc.nextLine());
+                        System.out.println("Nhap ten sach can sua: ");
+                        book.setBookName(sc.nextLine());
                         break;
                     case 2:
-                        System.out.println("Nhap mo ta can sua: ");
-                        bookType.setDescription(sc.nextLine());
+                        System.out.println("Nhap tieu de can sua: ");
+                        book.setTitle(sc.nextLine());
                         break;
                     case 3:
-                        System.out.println("Nhap trang thai can sua: ");
-                        bookType.setDeleted(Boolean.parseBoolean(sc.nextLine()));
+                        System.out.println("Nhap ten tac gia can sua: ");
+                        book.setAuthor(sc.nextLine());
                         break;
                     case 4:
+                        System.out.println("Nhap tong so trang can sua: ");
+                        book.setTotalPages(Integer.parseInt(sc.nextLine()));
+                        break;
+                    case 5:
+                        System.out.println("Nhap noi dung can sua: ");
+                        book.setContent(sc.nextLine());
+                        break;
+                    case 6:
+                        System.out.println("Nhap nha san xuat can sua: ");
+                        book.setPublisher(sc.nextLine());
+                        break;
+                    case 7:
+                        System.out.println("Nhap gia tien can sua: ");
+                        book.setPrice(Integer.parseInt(sc.nextLine()));
+                        break;
+                    case 8:
+                        System.out.println("Nhap ma loai sach can sua: ");
+                        book.setTypeId(Integer.parseInt(sc.nextLine()));
+                        break;
+                    case 9:
+                        System.out.println("Nhap trang thai can sua: ");
+                        book.setDeleted(Boolean.parseBoolean(sc.nextLine()));
+                        break;
+                    case 10:
                         isExit = false;
                         break;
                     default:
                         System.out.println("Chon sai, moi ban chon lai!");
                 }
-                boolean result = BookTypeBusiness.updateBookType(bookType);
+                boolean result = BookBusiness.updateBook(book);
                 if (result) {
-                    System.out.println("Cap nhat danh sach loai sach thanh cong");
+                    System.out.println("Cap nhat danh sach cac sach thanh cong");
                 }
                 else {
-                    System.out.println("Cap nhat danh sach loai sach that bai");
+                    System.out.println("Cap nhat danh sach cac sach that bai");
                 }
             }
             while (isExit);
         }
         else{
-            System.out.println("Khong tim thay id loai sach can sua!");
+            System.out.println("Khong tim thay id  sach can sua!");
+        }
+    }
+    // xay dung phuong thuc xoa cac sach
+    public static void deleteBook(Scanner sc){
+        System.out.println("Nhap id sach can xoa: ");
+        int idBook = Integer.parseInt(sc.nextLine());
+        Book book = BookBusiness.getBookById(idBook);
+        if (book != null) {
+            boolean result = BookBusiness.deleteBookById(idBook);
+            if (result) {
+                System.out.println("xoa danh sach cac sach thanh cong ");
+            }
+            else {
+                System.out.println("xoa danh sach cac sach that bai");
+            }
+        }
+        else {
+            System.out.println("Khong tim thay id sach can xoa!");
+        }
+    }
+    // xay dung phuong thuc hien thi danh sach gia sach theo sap xep giam dan
+    public static void listPriceBook(Scanner sc){
+        List<Book> bookListPrice = BookBusiness.listPriceBook();
+        for (Book book : bookListPrice) {
+            book.displayData();
         }
     }
 }

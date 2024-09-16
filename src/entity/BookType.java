@@ -8,15 +8,25 @@ public class BookType implements  IBookManagement {
     private String TypeName;
     private String description;
     private boolean IsDeleted;
+    private int TotalBooks;
 
     public BookType() {
     }
 
-    public BookType(int typeId, String typeName, String description, boolean isDeleted) {
+    public BookType(int typeId, String typeName, String description, boolean isDeleted , int totalBooks) {
         TypeId = typeId;
         TypeName = typeName;
         this.description = description;
         IsDeleted = isDeleted;
+        TotalBooks = totalBooks;
+    }
+
+    public int getTotalBooks() {
+        return TotalBooks;
+    }
+
+    public void setTotalBooks(int totalBooks) {
+        TotalBooks = totalBooks;
     }
 
     public int getTypeId() {
@@ -66,5 +76,9 @@ public class BookType implements  IBookManagement {
         this.description = sc.nextLine();
         System.out.println("Nhap trang thai(true/false): ");
         IsDeleted = Boolean.parseBoolean(sc.nextLine());
+    }
+    public void displayTotalBooks(){
+        System.out.println("TypeName: " + TypeName);
+        System.out.println("Total Books: " + TotalBooks);
     }
 }
