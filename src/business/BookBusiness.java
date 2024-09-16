@@ -181,4 +181,69 @@ public class BookBusiness {
         }
         return books;
     }
+    // tim kiem theo ten hoac noi dung
+    public static List<Book> searchBookNameOrContent(String keyword){
+        Connection connection = null;
+        List<Book> books = new ArrayList<>();
+        try{
+            connection = ConnectionDB.openConnection();
+            String sql = "select * from book where bookname like ? or content like ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + keyword + "%");
+            preparedStatement.setString(2, "%" + keyword + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Book book = new Book();
+                book.setBookId(resultSet.getInt("bookid"));
+                book.setBookName(resultSet.getString("bookname"));
+                book.setTitle(resultSet.getString("tilte"));
+                book.setAuthor(resultSet.getString("author"));
+                book.setTotalPages(resultSet.getInt("totalpages"));
+                book.setContent(resultSet.getString("content"));
+                book.setPublisher(resultSet.getString("publisher"));
+                book.setPrice(resultSet.getFloat("price"));
+                book.setTypeId(resultSet.getInt("typeid"));
+                book.setDeleted(resultSet.getBoolean("isdeleted"));
+                books.add(book);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            ConnectionDB.closeConnection(connection);
+        }
+        return books;
+    }
+    // thong ke so luong sach theo nhom
+    public static List<Book> ListBookGroup(){
+        Connection connection = null;
+        List<Book> books = new ArrayList<>();
+        try{
+            connection = ConnectionDB.openConnection();
+            String sql = "select b.BookName, b.totalPages,\n" +
+                    "\tcase\n" +
+                    "\t\twhen b.totalPages < 50 Then 'Nhom 1: duoi 50 trang'\n" +
+                    "        when b.totalPages >= 50 and b.totalPages < 300 Then 'Nhom 2: tu 50 den duoi 300 trang'\n" +
+                    "        else 'Nhom 3: tu 300 tro len'\n" +
+                    "    end as totalPagesGroup    \n" +
+                    "from book b;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Book book = new Book();
+                book.setBookName(resultSet.getString("bookname"));
+                book.setTotalPages(resultSet.getInt("totalpages"));
+                book.setTotalPagesGroup(resultSet.getString("totalpagesGroup"));
+                books.add(book);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            ConnectionDB.closeConnection(connection);
+        }
+        return books;
+    }
 }

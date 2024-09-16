@@ -13,11 +13,12 @@ public class Book implements IBookManagement{
     private float Price;
     private int TypeId;
     private boolean IsDeleted;
+    private String TotalPagesGroup;
 
     public Book() {
     }
 
-    public Book(int bookId, String bookName, String title, String author, int totalPages, String content, String publisher, float price, int typeId, boolean isDeleted) {
+    public Book(int bookId, String bookName, String title, String author, int totalPages, String content, String publisher, float price, int typeId, boolean isDeleted, String totalPagesGroup) {
         BookId = bookId;
         BookName = bookName;
         Title = title;
@@ -28,6 +29,15 @@ public class Book implements IBookManagement{
         Price = price;
         TypeId = typeId;
         IsDeleted = isDeleted;
+        TotalPagesGroup = totalPagesGroup;
+    }
+
+    public String getTotalPagesGroup() {
+        return TotalPagesGroup;
+    }
+
+    public void setTotalPagesGroup(String totalPagesGroup) {
+        TotalPagesGroup = totalPagesGroup;
     }
 
     public int getBookId() {
@@ -146,5 +156,11 @@ public class Book implements IBookManagement{
         TypeId = Integer.parseInt(sc.nextLine());
         System.out.println("Nhap trang thai sach(true/false): ");
         IsDeleted = Boolean.parseBoolean(sc.nextLine());
+    }
+
+    public void displayTotalPagesGroup() {
+        System.out.println("BookName: " + BookName);
+        System.out.println("Total Pages: " + TotalPages);
+        System.out.println("TotalPagesGroup: \n" + TotalPagesGroup);
     }
 }

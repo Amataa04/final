@@ -103,8 +103,10 @@ public class BookManagement {
                     BookManagement.listPriceBook(sc);
                     break;
                 case 6:
+                    BookManagement.searchBookNameOrContent(sc);
                     break;
                 case 7:
+                    BookManagement.listGroupBook(sc);
                     break;
                 case 8:
                     isExit = false;
@@ -329,6 +331,27 @@ public class BookManagement {
         List<Book> bookListPrice = BookBusiness.listPriceBook();
         for (Book book : bookListPrice) {
             book.displayData();
+        }
+    }
+    // xay dung phuong thuc tim kiem theo ten sach hoac noi dung
+    public static void searchBookNameOrContent(Scanner sc){
+        System.out.println("Nhap tu khoa tim kiem: ");
+        String keyword = sc.nextLine();
+        List<Book> bookList = BookBusiness.searchBookNameOrContent(keyword);
+        for (Book book : bookList) {
+            if (book != null) {
+                book.displayData();
+            }
+            else {
+                System.out.println("Khong tim thay sach hay noi dung phu hop");
+            }
+        }
+    }
+    // thong ke so luong sach theo nhom
+    public static void listGroupBook(Scanner sc){
+        List<Book> listGroupBooks = BookBusiness.ListBookGroup();
+        for (Book book : listGroupBooks) {
+            book.displayTotalPagesGroup();
         }
     }
 }
