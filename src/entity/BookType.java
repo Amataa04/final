@@ -80,5 +80,6 @@ public class BookType implements  IBookManagement {
     public void displayTotalBooks(){
         System.out.println("TypeName: " + TypeName);
         System.out.println("Total Books: " + TotalBooks);
+        System.out.println("-------------------------------------------");
     }
 }

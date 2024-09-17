@@ -162,5 +162,6 @@ public class Book implements IBookManagement{
         System.out.println("BookName: " + BookName);
         System.out.println("Total Pages: " + TotalPages);
         System.out.println("TotalPagesGroup: \n" + TotalPagesGroup);
+        System.out.println("-------------------------------------------");
     }
 }

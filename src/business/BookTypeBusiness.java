@@ -125,7 +125,7 @@ public class BookTypeBusiness {
         return false;
     }
     // thong ke so luong sach theo ma loai sach
-    public static List<BookType> getAllBookTypesByBookId(int bookId) {
+    public static List<BookType> getAllBookTypesByBookId() {
         Connection connection = null;
         List<BookType> bookTypeList = new ArrayList<>();
         try {
@@ -139,6 +139,7 @@ public class BookTypeBusiness {
                 BookType bookType = new BookType();
                 bookType.setTypeId(resultSet.getInt("typeid"));
                 bookType.setTypeName(resultSet.getString("typename"));
+                bookType.setTotalBooks(resultSet.getInt("totalBook"));
                 bookTypeList.add(bookType);
             }
         }

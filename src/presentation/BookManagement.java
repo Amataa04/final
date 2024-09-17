@@ -204,9 +204,7 @@ public class BookManagement {
     }
     // xay dung phuong thuc thong ke so luong sach theo loai sach
     public static void listBookTypeByTypeId(Scanner sc){
-        System.out.println("Nhap id loai sach can thong ke: ");
-        int idBookType = Integer.parseInt(sc.nextLine());
-        List<BookType> bookTypesList = BookTypeBusiness.getAllBookTypesByBookId(idBookType);
+        List<BookType> bookTypesList = BookTypeBusiness.getAllBookTypesByBookId();
         for (BookType bookType : bookTypesList) {
             bookType.displayTotalBooks();
         }
@@ -338,13 +336,13 @@ public class BookManagement {
         System.out.println("Nhap tu khoa tim kiem: ");
         String keyword = sc.nextLine();
         List<Book> bookList = BookBusiness.searchBookNameOrContent(keyword);
-        for (Book book : bookList) {
-            if (book != null) {
+        if (bookList != null && bookList.size() > 0) {
+            for (Book book : bookList) {
                 book.displayData();
             }
-            else {
-                System.out.println("Khong tim thay sach hay noi dung phu hop");
-            }
+        }
+        else {
+            System.out.println("Khong tim thay sach can tim!");
         }
     }
     // thong ke so luong sach theo nhom
